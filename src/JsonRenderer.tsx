@@ -7,7 +7,6 @@ import {
   indent,
   ARRAY_BRACES,
   OBJECT_BRACES,
-  stringifyKey,
 } from "./utils";
 
 type Props = {
@@ -70,7 +69,7 @@ function JsonObjectOrArray(props: JsonObjectOrArrayProps): JSX.Element {
       {keys.map((key, i) => (
         <Fragment key={i}>
           {indent(level)}
-          {stringifyKey(key)}
+          {`${JSON.stringify(key)}: `}
           <JsonRenderer
             json={isArray ? json.at(Number(key)) : json[key]}
             level={level + 1}

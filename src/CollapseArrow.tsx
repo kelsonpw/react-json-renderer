@@ -14,7 +14,7 @@ export const CollapseArrow = (props: Props): JSX.Element => {
   return (
     <>
       <button className="toggle" onClick={toggleOpen}>
-        {isOpen ? DOWN_ARROW : RIGHT_ARROW}{" "}
+        {isOpen ? DOWN_ARROW : RIGHT_ARROW} {!isOpen && fallback}
       </button>
       <span
         style={{
@@ -23,7 +23,6 @@ export const CollapseArrow = (props: Props): JSX.Element => {
       >
         {children}
       </span>
-      {isOpen === false && <span>{fallback}</span>}
     </>
   );
 };

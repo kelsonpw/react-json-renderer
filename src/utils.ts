@@ -19,3 +19,4 @@ export const NEW_LINE = "\n";
 
 const INDENT_SIZE = 2;
 export const indent = (n: number): string => " ".repeat(n * INDENT_SIZE);
+export const stringifyKey = (key: string): string => `${JSON.stringify(key)}: `;

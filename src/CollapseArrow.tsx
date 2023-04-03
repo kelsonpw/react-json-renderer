@@ -1,13 +1,14 @@
 import { useToggle } from "./hooks";
 import { DOWN, RIGHT } from "./utils";
 
-export const CollapseArrow = ({
-  children,
-  fallback
-}: {
+type Props = {
   children: React.ReactNode;
   fallback: string;
-}) => {
+};
+
+export const CollapseArrow = (props: Props): JSX.Element => {
+  const { children, fallback } = props;
+
   const [isOpen, toggleOpen] = useToggle(false);
 
   return (

@@ -1,59 +1,68 @@
 import { Fragment } from "react";
 import { CollapseArrow } from "./CollapseArrow";
 import {
-  EMPTY_ARR,
-  EMPTY_OBJ,
+  collapsedObject,
+  collapsedArray,
   isFullArray,
   isFullObject,
   NEW_LINE,
-  spaces
+  indent,
+  ARRAY_BRACES,
+  OBJECT_BRACES,
 } from "./utils";
 
-const JsonObjectOrArray = ({
-  json,
-  level
-}: {
+type Props = {
   json: Record<string, any> | unknown[];
-  level: number;
-}) => {
+  level?: number;
+};
+
+export function JsonRenderer(props: Props) {
+  const { json, level = 1 } = props;
+
+  if (!isFullObject(json) && !isFullArray(json)) {
+    return <>{JSON.stringify(json)}</>;
+  }
+
+  return <JsonObjectOrArray json={json} level={level + 1} />;
+}
+
+function JsonObjectOrArray(props: Props & { level: number }) {
+  const { json, level } = props;
+
   const isArray = Array.isArray(json);
   const keys = isArray
     ? json.map((_, i) => JSON.stringify(i))
     : Object.keys(json);
 
-  const [openBrace, closeBrace] = isArray ? ["[", "]"] : ["{", "}"];
+  const [openBrace, closeBrace] = isArray ? ARRAY_BRACES : OBJECT_BRACES;
+
+  const renderKey = (key: string) => `${JSON.stringify(key)}: `;
+
+  const renderMaybeComma = (key: string) =>
+    keys.indexOf(key) < keys.length - 1 ? "," : "";
+
+  const fallback = isArray
+    ? collapsedArray(keys.length)
+    : collapsedObject(keys.length);
 
   return (
-    <CollapseArrow
-      fallback={isArray ? EMPTY_ARR(keys.length) : EMPTY_OBJ(keys.length)}
-    >
+    <CollapseArrow fallback={fallback}>
       {openBrace}
       {NEW_LINE}
       {keys.map((key, i) => (
         <Fragment key={i}>
-          {spaces(level * 2)}
-          {JSON.stringify(key)}:{" "}
-          {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
-          <JsonRenderer json={json[key]} level={level + 1} />
-          {keys.indexOf(key) < keys.length - 1 ? "," : ""}
+          {indent(level)}
+          {renderKey(key)}
+          <JsonRenderer
+            json={isArray ? json.at(Number(key)) : json[key]}
+            level={level + 1}
+          />
+          {renderMaybeComma(key)}
           {NEW_LINE}
         </Fragment>
       ))}
-      {spaces((level - 2) * 2)}
+      {indent(Math.max(0, level - 2))}
       {closeBrace}
     </CollapseArrow>
   );
-};
-
-export const JsonRenderer = ({
-  json,
-  level = 1
-}: {
-  json: Record<string, any> | unknown;
-  level?: number;
-}): JSX.Element =>
-  isFullObject(json) || isFullArray(json) ? (
-    <JsonObjectOrArray json={json} level={level + 1} />
-  ) : (
-    <>{JSON.stringify(json)}</>
-  );
+}

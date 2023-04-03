@@ -5,7 +5,7 @@ const block1 = {
   prop1: "hello",
   prop2: "there",
   prop3: true,
-  prop4: 12.4
+  prop4: 12.4,
 };
 
 const block2 = {
@@ -18,9 +18,9 @@ const block2 = {
     block1,
     prop7: {
       hello: "hi",
-      there: 7
-    }
-  }
+      there: 7,
+    },
+  },
 };
 
 const block3 = {
@@ -35,8 +35,8 @@ const block3 = {
   prop7: [],
   prop8: {
     prop5: block1,
-    prop6: ["cat", "dog", "bear", 168.01, block1, [block1]]
-  }
+    prop6: ["cat", "dog", "bear", 168.01, block1, [block1]],
+  },
 };
 
 export default function App() {

@@ -1,6 +1,7 @@
 # React JSON Viewer
 
 React JSON Viewer is a simple and user-friendly React-based application that allows you to visualize JSON data in a collapsible tree structure. This app supports both object literals and array literals, making it easy to navigate and understand complex JSON structures.
+<img width="316" alt="image" src="https://user-images.githubusercontent.com/17172317/229389628-94f017c6-72d1-49a1-a529-708d78fa481f.png">
 
 ## Features
 

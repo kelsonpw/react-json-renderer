@@ -58,10 +58,8 @@ function JsonObjectOrArray(props: JsonObjectOrArrayProps): JSX.Element {
   const renderMaybeComma = (key: string) =>
     keys.indexOf(key) < keys.length - 1 ? "," : "";
 
-  const fallback = `${openBrace}${".".repeat(Math.min(keys.length, 3))}${closeBrace}`;
-
   return (
-    <CollapseArrow fallback={fallback}>
+    <CollapseArrow fallback={`${openBrace}${".".repeat(Math.min(keys.length, 3))}${closeBrace}`}>
       {openBrace}
       {NEW_LINE}
       {keys.map((key, i) => (

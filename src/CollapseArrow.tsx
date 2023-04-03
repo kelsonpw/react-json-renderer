@@ -1,5 +1,5 @@
 import { useToggle } from "./hooks";
-import { DOWN, RIGHT } from "./utils";
+import { DOWN_ARROW, RIGHT_ARROW } from "./utils";
 
 type Props = {
   children: React.ReactNode;
@@ -14,11 +14,11 @@ export const CollapseArrow = (props: Props): JSX.Element => {
   return (
     <>
       <button className="toggle" onClick={toggleOpen}>
-        {isOpen ? DOWN : RIGHT}{" "}
+        {isOpen ? DOWN_ARROW : RIGHT_ARROW}{" "}
       </button>
       <span
         style={{
-          display: isOpen ? "initial" : "none"
+          display: isOpen ? "initial" : "none",
         }}
       >
         {children}

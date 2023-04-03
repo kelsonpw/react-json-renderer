@@ -1,15 +1,13 @@
 import { Fragment } from "react";
 import { CollapseArrow } from "./CollapseArrow";
 import {
-  collapsedObject,
-  collapsedArray,
-  isFullArray,
-  isFullObject,
+  isArrayWithValues,
+  isObjectWithKeys,
   NEW_LINE,
   indent,
   ARRAY_BRACES,
   OBJECT_BRACES,
-  stringifyKey
+  stringifyKey,
 } from "./utils";
 
 type Props = {
@@ -29,12 +27,11 @@ type Props = {
 export function JsonRenderer(props: Props): JSX.Element {
   const { json, level = 1 } = props;
 
-  if (!isFullObject(json) && !isFullArray(json)) {
-    return <>{JSON.stringify(json)}</>;
+  if (isArrayWithValues(json) || isObjectWithKeys(json)) {
+    return <JsonObjectOrArray json={json} level={level + 1} />;
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
-  return <JsonObjectOrArray json={json} level={level + 1} />;
+  return <>{JSON.stringify(json)}</>;
 }
 
 type JsonObjectOrArrayProps = {
@@ -63,8 +60,8 @@ function JsonObjectOrArray(props: JsonObjectOrArrayProps): JSX.Element {
     keys.indexOf(key) < keys.length - 1 ? "," : "";
 
   const fallback = isArray
-    ? collapsedArray(keys.length)
-    : collapsedObject(keys.length);
+    ? `[${".".repeat(Math.min(keys.length, 3))}]`
+    : `{${".".repeat(Math.min(keys.length, 3))}}`;
 
   return (
     <CollapseArrow fallback={fallback}>

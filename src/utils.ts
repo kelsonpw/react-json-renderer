@@ -1,20 +1,16 @@
-export const isFullObject = (item: unknown): item is Record<string, any> =>
+export const isObjectWithKeys = (item: unknown): item is Record<string, any> =>
   typeof item === "object" &&
   !Array.isArray(item) &&
   item !== null &&
   Object.keys(item).length > 0;
 
-export const isFullArray = (item: unknown): item is unknown[] =>
+export const isArrayWithValues = (item: unknown): item is unknown[] =>
   Array.isArray(item) && item.length > 0;
 
 export const ARRAY_BRACES = ["[", "]"];
 export const OBJECT_BRACES = ["{", "}"];
-export const RIGHT = "▶";
-export const DOWN = "▼";
-export const collapsedObject = (len: number): string =>
-  `{${".".repeat(Math.min(len, 3))}}`;
-export const collapsedArray = (len: number): string =>
-  `[${".".repeat(Math.min(len, 3))}]`;
+export const RIGHT_ARROW = "▶";
+export const DOWN_ARROW = "▼";
 export const NEW_LINE = "\n";
 
 const INDENT_SIZE = 2;
